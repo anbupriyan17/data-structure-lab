@@ -1,0 +1,66 @@
+class Music():
+    def __init__(self,data):
+        self.data=data
+        self.next=None
+class PlayList():
+    def __init__(self):
+        self.head=None
+    def is_empty(self):
+            return self.head is None
+    def append(self,data):
+        new_song=Music(data)
+        if self.head is None:
+            self.head=new_song
+            return
+        current=self.head
+        while current.next:
+            current=current.next
+        current.next=new_song
+    def prepend(self,data):
+        new_song=Music(data)
+        new_song.next=self.head
+        self.head=new_song
+    def display(self):
+        current=self.head
+        while current:
+            print(current.data,end="->")
+            current=current.next
+        print("None")
+    def find(self,data):
+        current=self.head
+        while current:
+            if current.data==data:
+                print("Song found:",current.data)
+                return
+            current=current.next
+        print(data,"Song not found")
+    def delete(self,data):
+        if self.head is None:
+            return
+        if self.head.data==data:
+            self.head=self.head.next
+            return
+        current=self.head
+        while current.next:
+            if current.next.data==data:
+                current.next=current.next.next
+                return
+            current=current.next
+    def insert_song(self,data):
+        
+song=PlayList()
+n=int(input("Enter no. of songs:"))
+for i in range(n):
+    l=input(f"Enter song{i+1}:")
+    song.append(l)
+song.display()
+n1=int(input("Enter no. of songs:"))
+for i in range(n1):
+    p=input(f"Enter song{i+1}:")
+    song.prepend(p)
+song.display()
+a=input("Enter song to find:")
+song.find(a)
+b=input("Enter song to be deleted:")
+song.delete(b)
+song.display()
