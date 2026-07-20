@@ -46,7 +46,6 @@ class PlayList():
                 current.next=current.next.next
                 return
             current=current.next
-    def insert_song(self,data):
         
 song=PlayList()
 n=int(input("Enter no. of songs:"))
