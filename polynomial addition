@@ -1,0 +1,73 @@
+class Node:
+    def __init__(this, coeff, exp):
+        this.coeff = coeff
+        this.exp = exp
+        this.next = None
+class Poly:
+    def __init__(this):
+        this.head = None
+    def insert(this, coeff, exp):
+        new_node = Node(coeff, exp)
+        if not this.head or this.head.exp < exp:
+            new_node.next = this.head
+            this.head = new_node
+        else:
+            temp= this.head
+            while temp.next and temp.next.exp >= exp:
+                temp = temp.next
+            if temp.exp == exp:
+                temp.coeff += coeff
+            elif temp.next and temp.next.exp == exp:
+                temp.next.coeff += coeff
+            else:
+                new_node.next = temp.next
+                temp.next = new_node
+def add_polynomials(poly1, poly2):
+    p1 = poly1.head
+    p2 = poly2.head
+    result = Poly()
+    while p1 and p2:
+        if p1.exp == p2.exp:
+            result.insert(p1.coeff + p2.coeff, p1.exp)
+            p1 = p1.next
+            p2 = p2.next
+        elif p1.exp > p2.exp:
+            result.insert(p1.coeff, p1.exp)
+            p1 = p1.next
+        else:
+            result.insert(p2.coeff, p2.exp)
+            p2 = p2.next
+    while p1:
+        result.insert(p1.coeff, p1.exp)
+        p1 = p1.next
+    while p2:
+        result.insert(p2.coeff, p2.exp)
+        p2 = p2.next
+    return result
+def display(poly):
+    temp = poly.head
+    terms = []
+    while temp:
+        terms.append(f"{temp.coeff}x^{temp.exp}")
+        temp = temp.next
+    print(" + ".join(terms))
+p1 = Poly()
+p2 = Poly()
+n=int(input("Enter no of Polynomials:"))
+print("Enter elements for Polynomial 1:")
+for i in range(n):
+    a=int(input(f"Coefficient {i+1}:"))
+    b=int(input(f"Power term {i+1}:"))
+    p1.insert(a,b)
+print("Enter elements for Polynomial 2:")
+for i in range(n):
+    a=int(input(f"Coefficient {i+1}:"))
+    b=int(input(f"Power term {i+1}:"))
+    p2.insert(a,b)
+print("Polynomial 1:")
+display(p1)
+print("Polynomial 2:")
+display(p2)
+result = add_polynomials(p1, p2)
+print("Resultant Polynomial:")
+display(result)
