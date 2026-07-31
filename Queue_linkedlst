@@ -1,0 +1,51 @@
+class Node:
+    def __init__(self,data):
+        self.data=data
+        self.next=None
+
+class Traffic:
+    def __init__(self):
+        self.front=None
+        self.rear=None
+
+    def is_empty(self):
+        return self.front is None
+        
+
+    def enqueue_car(self,data):
+        new_car=Node(data)
+        if self.front is None:
+            self.front=self.rear=new_car
+
+        self.rear.next=new_car
+        self.rear=new_car
+
+    def dequeue_car(self):
+        if self.front is None:
+            return None
+
+
+        out=self.front.data
+        self.front=self.front.next
+
+    def display(self):
+        current=self.front
+        while current:
+            print(current.data,"-->",end="")
+            current=current.next
+        print("None")
+
+
+cars=Traffic()
+n=int(input("enter the number of cars: "))
+for i in range(n):
+    b=input(f"Enter car name{i+1} :")
+    cars.enqueue_car(b)
+
+cars.display()
+
+no=int(input("Enter number of cars to out: "))
+for i in range(no):
+    cars.dequeue_car()
+    cars.display()
+    print("\n")
